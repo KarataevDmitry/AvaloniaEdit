@@ -1,4 +1,4 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Styles.Resources>
     <ResourceDictionary>
@@ -32,7 +32,8 @@
       </ResourceDictionary.ThemeDictionaries>
 
       <ResourceDictionary.MergedDictionaries>
-        <ResourceInclude Source="../Base.xaml" />
+        <!-- avares: см. Fluent/AvaloniaEdit.xaml -->
+        <ResourceInclude Source="avares://AvaloniaEdit/Themes/Base.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Styles.Resources>
