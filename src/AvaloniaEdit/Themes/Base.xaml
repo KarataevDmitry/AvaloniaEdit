@@ -1,12 +1,14 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <ResourceDictionary.MergedDictionaries>
-    <!-- Полные avares: кросс-сборочный компилятор приложения (CascadeIDE) иначе даёт AVLN2000 на MergeResourceInclude с путями "/...". -->
-    <MergeResourceInclude Source="avares://AvaloniaEdit/TextEditor.xaml" />
-    <MergeResourceInclude Source="avares://AvaloniaEdit/Editing/TextArea.xaml" />
-    <MergeResourceInclude Source="avares://AvaloniaEdit/CodeCompletion/CompletionTipContentControl.xaml" />
-    <MergeResourceInclude Source="avares://AvaloniaEdit/CodeCompletion/CompletionList.xaml" />
-    <MergeResourceInclude Source="avares://AvaloniaEdit/CodeCompletion/InsightWindow.xaml" />
-    <MergeResourceInclude Source="avares://AvaloniaEdit/Search/SearchPanel.xaml" />
+    <!-- ResourceInclude вместо MergeResourceInclude: при StyleInclude из главного приложения компилятор иначе
+         не находит сборочный узел !AvaloniaResources в AvaloniaEdit (AVLN2000). Merge — «тот же проект»;
+         ResourceInclude — стабильная цепочка avares для project reference. -->
+    <ResourceInclude Source="avares://AvaloniaEdit/TextEditor.xaml" />
+    <ResourceInclude Source="avares://AvaloniaEdit/Editing/TextArea.xaml" />
+    <ResourceInclude Source="avares://AvaloniaEdit/CodeCompletion/CompletionTipContentControl.xaml" />
+    <ResourceInclude Source="avares://AvaloniaEdit/CodeCompletion/CompletionList.xaml" />
+    <ResourceInclude Source="avares://AvaloniaEdit/CodeCompletion/InsightWindow.xaml" />
+    <ResourceInclude Source="avares://AvaloniaEdit/Search/SearchPanel.xaml" />
   </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
