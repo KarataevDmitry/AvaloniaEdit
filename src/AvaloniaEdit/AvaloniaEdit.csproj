@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" />
+    <!-- Needed for resource/XAML build targets when consumed via ProjectReference (AVLN2000 / !AvaloniaResources). -->
+    <PackageReference Include="Avalonia.Desktop" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
