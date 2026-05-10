@@ -7,7 +7,8 @@
 #   Workflow File:     nuget-publish.yml
 #   Environment:       (пусто, если не используешь GitHub Environment)
 #
-# Секрет репозитория: NUGET_USERNAME — имя профиля на nuget.org (не e-mail).
+# NuGet/username в шаге login — как в AIGuiders.DotnetTools / dotnet-mcp-templates (публичный профиль LonelySoul);
+# секретов репозитория для Trusted Publishing OIDC не требуется.
 #
 # Тег: отправь annotated или lightweight git tag вида v12.0.1-cascade.1 — версия NuGet будет
 # 12.0.1-cascade.1 (префикс v снимается). Тот же файл workflow — политика Trusted Publishing остаётся валидной.
@@ -75,7 +76,7 @@ jobs:
         uses: NuGet/login@v1
         id: nuget_login
         with:
-          user: ${{ secrets.NUGET_USERNAME }}
+          user: LonelySoul
 
       - name: Push .nupkg to nuget.org
         run: >

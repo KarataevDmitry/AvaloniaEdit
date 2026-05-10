@@ -3,13 +3,9 @@
 Пакеты: **`AIGuiders.AvaloniaEdit`**, **`AIGuiders.AvaloniaEdit.TextMate`**.  
 Воркфлоу: [`.github/workflows/nuget-publish.yml`](../.github/workflows/nuget-publish.yml).
 
-## 1. Имя профиля на nuget.org
+## 1. Учётка nuget.org (без секретов GitHub)
 
-Нужен **username** из профиля nuget.org (не e-mail). Его кладём в секрет репозитория GitHub:
-
-- **Settings → Secrets and variables → Actions → New repository secret**
-- Имя: **`NUGET_USERNAME`**
-- Значение: имя профиля (как в URL `https://www.nuget.org/profiles/...`).
+Как в [dotnet-mcp-templates](https://github.com/KarataevDmitry/dotnet-mcp-templates) и **AIGuiders.DotnetTools**: в workflow в шаге `NuGet/login@v1` задаётся **публичный** профиль (**`LonelySoul`**). Отдельные секреты репозитория для этого не нужны — OIDC Trusted Publishing всё делает после настройки политики.
 
 ## 2. Политика Trusted Publishing
 
