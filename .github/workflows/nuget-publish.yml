@@ -1,0 +1,95 @@
+# Публикация AIGuiders.AvaloniaEdit* на nuget.org через Trusted Publishing (OIDC).
+# Настройка политики: https://learn.microsoft.com/nuget/nuget-org/trusted-publishing
+#
+# В nuget.org → Trusted Publishing укажи:
+#   Repository Owner: KarataevDmitry   (или владелец форка после переноса)
+#   Repository:      AvaloniaEdit
+#   Workflow File:     nuget-publish.yml
+#   Environment:       (пусто, если не используешь GitHub Environment)
+#
+# Секрет репозитория: NUGET_USERNAME — имя профиля на nuget.org (не e-mail).
+#
+# Тег: отправь annotated или lightweight git tag вида v12.0.1-cascade.1 — версия NuGet будет
+# 12.0.1-cascade.1 (префикс v снимается). Тот же файл workflow — политика Trusted Publishing остаётся валидной.
+
+name: Publish AIGuiders.AvaloniaEdit (nuget.org)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      package_version:
+        description: 'SemVer для обоих пакетов (например 12.0.1-cascade.1)'
+        required: true
+        default: '12.0.1-cascade.0'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Resolve package version (tag or manual input)
+        id: semver
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "value=${{ github.event.inputs.package_version }}" >> "$GITHUB_OUTPUT"
+          else
+            t="${{ github.ref_name }}"
+            echo "value=${t#v}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Pack
+        run: |
+          pkgver="${{ steps.semver.outputs.value }}"
+          dotnet pack src/AvaloniaEdit/AvaloniaEdit.csproj \
+            -c Release -o artifacts -p:PackageVersion="$pkgver"
+          dotnet pack src/AvaloniaEdit.TextMate/AvaloniaEdit.TextMate.csproj \
+            -c Release -o artifacts -p:PackageVersion="$pkgver"
+
+      - name: NuGet login (OIDC → short-lived API key)
+        uses: NuGet/login@v1
+        id: nuget_login
+        with:
+          user: ${{ secrets.NUGET_USERNAME }}
+
+      - name: Push .nupkg to nuget.org
+        run: >
+          dotnet nuget push artifacts/*.nupkg
+          --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}"
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+
+      - name: Push .snupkg (if any)
+        run: |
+          shopt -s nullglob
+          for f in artifacts/*.snupkg; do
+            dotnet nuget push "$f" \
+              --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}" \
+              --source https://api.nuget.org/v3/index.json \
+              --skip-duplicate
+          done
