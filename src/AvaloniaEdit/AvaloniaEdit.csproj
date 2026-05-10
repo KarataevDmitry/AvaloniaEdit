@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <WarningsNotAsErrors>0612,0618</WarningsNotAsErrors>
-    <PackageId>Avalonia.AvaloniaEdit</PackageId>
-    <PackageDescription>This project is a port of AvalonEdit, a WPF-based text editor for Avalonia.</PackageDescription>
-    <PackageTags>editor;code-editor;avalonia;text-editor;netstandard</PackageTags>
+    <PackageId>AIGuiders.AvaloniaEdit</PackageId>
+    <PackageDescription>Форк upstream AvaloniaEdit для AIGuiders / CascadeIDE: выровненная версия Avalonia и патчи для потребления пакетом (ресурсы / AVLN2000 и см.). Отдельного «полного порта AvalonEdit заново» нет — это та же кодовая база AvaloniaEdit с целевыми доработками под наш сценарий.</PackageDescription>
+    <PackageTags>aiguiders;cascade;cascadeide;fork;avalonia;avaloniaedit;editor;text-editor</PackageTags>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
@@ -34,4 +34,4 @@
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Update="Document\DocumentLine.LineNode.cs"><DependentUpon>DocumentLine.cs</DependentUpon></Compile></ItemGroup></Project>

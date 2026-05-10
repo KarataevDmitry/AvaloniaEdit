@@ -1,8 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-    <PackageDescription>TextMate integration for AvaloniaEdit.</PackageDescription>
+    <PackageId>AIGuiders.AvaloniaEdit.TextMate</PackageId>
+    <PackageDescription>TextMate для пакета AIGuiders.AvaloniaEdit; тот же форк под CascadeIDE / AIGuiders, не отдельный порт заново.</PackageDescription>
+    <PackageTags>aiguiders;cascade;cascadeide;fork;avalonia;avaloniaedit;textmate;syntax-highlighting</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
